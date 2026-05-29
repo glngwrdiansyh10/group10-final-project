@@ -66,7 +66,7 @@
                 <p class="text-xs text-slate-400">@yield('page-subtitle', now()->translatedFormat('l, d F Y'))</p>
             </div>
             <div class="flex items-center gap-3">
-                @if(auth()->user()->cabang)
+                @if(auth()->check() && auth()->user()->cabang)
                     <span class="badge-green">
                         <i class="fas fa-store text-[10px]"></i>
                         {{ auth()->user()->cabang->nama_cabang }}
