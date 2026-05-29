@@ -49,7 +49,7 @@ class ProdukController extends Controller
 
         Produk::create($validated);
 
-        return redirect()->route('produk.index')
+        return redirect()->route('owner.produk.index')
             ->with('success', 'Produk berhasil ditambahkan.');
     }
 
@@ -74,7 +74,7 @@ class ProdukController extends Controller
 
         $produk->update($validated);
 
-        return redirect()->route('produk.index')
+        return redirect()->route('owner.produk.index')
             ->with('success', 'Data produk berhasil diperbarui.');
     }
 
@@ -86,7 +86,7 @@ class ProdukController extends Controller
 
         $produk->delete();
 
-        return redirect()->route('produk.index')
+        return redirect()->route('owner.produk.index')
             ->with('success', 'Produk berhasil dihapus.');
     }
 }

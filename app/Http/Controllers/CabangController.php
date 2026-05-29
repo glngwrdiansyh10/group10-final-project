@@ -30,7 +30,7 @@ class CabangController extends Controller
 
         Cabang::create($validated);
 
-        return redirect()->route('cabang.index')
+        return redirect()->route('owner.cabang.index')
             ->with('success', 'Cabang berhasil ditambahkan.');
     }
 
@@ -51,7 +51,7 @@ class CabangController extends Controller
 
         $cabang->update($validated);
 
-        return redirect()->route('cabang.index')
+        return redirect()->route('owner.cabang.index')
             ->with('success', 'Data cabang berhasil diperbarui.');
     }
 
@@ -63,7 +63,7 @@ class CabangController extends Controller
 
         $cabang->delete();
 
-        return redirect()->route('cabang.index')
+        return redirect()->route('owner.cabang.index')
             ->with('success', 'Cabang berhasil dihapus.');
     }
 }
