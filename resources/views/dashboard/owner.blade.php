@@ -135,7 +135,7 @@
 </div>
 
 {{-- ── TRANSAKSI TERBARU ─────────────────────────────────────────── --}}
-<div class="card">
+<div class="card auto-refresh" id="dashboard-owner-transaksi">
     <div class="flex items-start justify-between mb-4 pb-3.5 border-b border-dark-400">
         <div>
             <h3 class="font-bold text-sm">Transaksi Terbaru</h3>
