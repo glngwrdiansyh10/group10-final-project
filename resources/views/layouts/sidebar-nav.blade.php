@@ -53,7 +53,7 @@
     </a>
 @endif
 
-{{-- ── SUPERVISOR ───────────────────────────────────── --}}
+{{-- ── SUPERVISOR ───────────────────────────────────────── --}}
 @if ($role === 'supervisor')
     <div class="sidebar-label">Menu Utama</div>
     <a href="{{ route('supervisor.dashboard') }}"

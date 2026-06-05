@@ -76,7 +76,7 @@
                         <i class="fas fa-globe text-[10px]"></i> Semua Cabang
                     </span>
                 @endif
-                <span class="text-xs text-slate-500">{{ now()->format('H:i') }} WIB</span>
+                <span id="realtime-clock" class="text-xs text-slate-500 font-mono">{{ now()->format('H:i:s') }} WIB</span>
             </div>
         </header>
 
@@ -116,6 +116,37 @@
             setTimeout(() => flash.remove(), 500);
         }, 4000);
     }
+
+    // Realtime Clock
+    setInterval(() => {
+        const clock = document.getElementById('realtime-clock');
+        if (clock) {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            clock.textContent = `${h}:${m}:${s} WIB`;
+        }
+    }, 1000);
+
+    // Auto-refresh data secara berkala (tanpa reload penuh)
+    setInterval(() => {
+        const autoRefreshElements = document.querySelectorAll('.auto-refresh');
+        if (autoRefreshElements.length > 0) {
+            fetch(window.location.href)
+                .then(res => res.text())
+                .then(html => {
+                    const doc = new DOMParser().parseFromString(html, 'text/html');
+                    autoRefreshElements.forEach((el) => {
+                        const id = el.getAttribute('id');
+                        if (id) {
+                            const newEl = doc.getElementById(id);
+                            if (newEl) el.innerHTML = newEl.innerHTML;
+                        }
+                    });
+                });
+        }
+    }, 10000); // 10 detik
 </script>
 </body>
 </html>
