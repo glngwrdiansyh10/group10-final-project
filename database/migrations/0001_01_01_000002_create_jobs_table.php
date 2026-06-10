@@ -6,54 +6,33 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
-    {
-        Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('queue')->index();
-            $table->longText('payload');
-            $table->unsignedSmallInteger('attempts');
-            $table->unsignedInteger('reserved_at')->nullable();
-            $table->unsignedInteger('available_at');
-            $table->unsignedInteger('created_at');
-        });
+{
+    Schema::table('users', function (Blueprint $table) {
+        if (!Schema::hasColumn('users', 'role')) {
+            $table->enum('role', ['owner', 'manajer', 'supervisor', 'kasir', 'gudang'])
+                  ->default('kasir')
+                  ->after('name');
+        }
 
-        Schema::create('job_batches', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('name');
-            $table->integer('total_jobs');
-            $table->integer('pending_jobs');
-            $table->integer('failed_jobs');
-            $table->longText('failed_job_ids');
-            $table->mediumText('options')->nullable();
-            $table->integer('cancelled_at')->nullable();
-            $table->integer('created_at');
-            $table->integer('finished_at')->nullable();
-        });
+        if (!Schema::hasColumn('users', 'cabang_id')) {
+            $table->foreignId('cabang_id')
+                  ->nullable()
+                  ->constrained('cabang')
+                  ->nullOnDelete();
+        }
 
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid')->unique();
-            $table->string('connection');
-            $table->string('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
+        if (!Schema::hasColumn('users', 'telepon')) {
+            $table->string('telepon', 20)
+                  ->nullable()
+                  ->after('email');
+        }
 
-            $table->index(['connection', 'queue', 'failed_at']);
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('jobs');
-        Schema::dropIfExists('job_batches');
-        Schema::dropIfExists('failed_jobs');
-    }
+        if (!Schema::hasColumn('users', 'is_active')) {
+            $table->boolean('is_active')
+                  ->default(true)
+                  ->after('telepon');
+        }
+    });
+}
 };
