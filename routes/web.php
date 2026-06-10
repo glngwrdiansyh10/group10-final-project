@@ -42,10 +42,12 @@ Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->grou
 // ─── Manajer ──────────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:manajer'])->prefix('manajer')->name('manajer.')->group(function () {
     Route::get('/dashboard', [ManajerDashboardController::class, 'index'])->name('dashboard');
+    
     // Transaksi (Nazwa)
     Route::get('/transaksi', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
     Route::get('/transaksi/cetak', [TransaksiController::class, 'cetakLaporan'])->name('transaksi.cetak');
     Route::get('/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksi.show');
+    
     // Stok (Ali)
     Route::get('/stok', [StokController::class, 'laporan'])->name('stok.laporan');
     Route::get('/stok/cetak', [StokController::class, 'cetakLaporan'])->name('stok.cetak');
